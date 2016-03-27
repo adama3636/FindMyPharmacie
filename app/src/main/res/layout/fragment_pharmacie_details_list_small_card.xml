@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp"
+        android:layout_marginBottom="@dimen/cardMarginVertical"
+        android:layout_marginLeft="@dimen/cardMarginHorizontal"
+        android:layout_marginRight="@dimen/cardMarginHorizontal"
+        android:layout_marginTop="@dimen/cardMarginVertical"
+        app:cardPreventCornerOverlap="false"
+        app:contentPadding="0dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:padding="10dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/ic_location"
+                    android:id="@+id/addressPharmacieIcone"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Adresse"
+                        android:id="@+id/addressPharmacieLibelle"
+                        android:textColor="@color/colorTitle"
+                        android:textSize="20sp"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="5dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Adama DIALLO"
+                        android:id="@+id/addressPharmacie"
+                        android:textColor="@color/colorTitle"
+                        android:textSize="15sp"
+                        android:paddingLeft="5dp"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+            <View style="@style/Divider"
+                android:background="#dadada"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/ic_call"
+                    android:id="@+id/icon_pharmacie"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Telephone"
+                        android:id="@+id/addressTelephoneLibelle"
+                        android:textColor="@color/colorTitle"
+                        android:textSize="20sp"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="5dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="+221 77 421 49 93"
+                        android:id="@+id/addressTelephone"
+                        android:textColor="@color/colorTitle"
+                        android:textSize="15sp"
+                        android:paddingLeft="5dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</FrameLayout>
