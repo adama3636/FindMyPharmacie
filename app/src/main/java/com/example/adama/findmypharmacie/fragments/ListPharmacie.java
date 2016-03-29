@@ -115,8 +115,8 @@ public class ListPharmacie extends Fragment {
                 Pharmacie pharmacie = pharmacieList.get(position);
                 Intent i = new Intent(getActivity(), ParmacieDetail.class);
                 i.putExtra("Name", pharmacie.getName());
-                i.putExtra("Address", pharmacie.getAddress());
                 i.putExtra("Telephone", pharmacie.getTelephone());
+                i.putExtra("Address", pharmacie.getAddress());
                 i.putExtra("Emei", pharmacie.getEmei());
                 i.putExtra("Latitude", pharmacie.getLatitude());
                 i.putExtra("Longitude", pharmacie.getLongitude());

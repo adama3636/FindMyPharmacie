@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Add the Very First i.e Squad Fragment to the Container
-        Fragment mainFragment = new ListPharmacie();
+        Fragment mainFragment = new MainFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_fragment,mainFragment,null);
         fragmentTransaction.commit();

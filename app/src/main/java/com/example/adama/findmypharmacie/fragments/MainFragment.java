@@ -190,6 +190,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 this.tvAccuracy.setText(accuracy + "");
                 this.btnSubmit.setEnabled(true);
                 this.btnSubmit.setBackgroundResource(R.drawable.custom_button);
+                this.btnSubmit.setPadding(60, 10, 60, 10);
+                this.btnSubmit.setTextColor(Color.WHITE);
+
             }
         }else if(v.getId() == R.id.submit){
             submitForm(v);
@@ -278,8 +281,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         int cameraImageWidth = bmOptions.outWidth;
         int cameraImageHeight = bmOptions.outHeight;
 
-        int scaleFactor = Math.min(cameraImageWidth/tagetImageViewWidth, cameraImageHeight/tagetImageViewHeight);
-        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inSampleSize = Math.min(cameraImageWidth/tagetImageViewWidth, cameraImageHeight/tagetImageViewHeight);
         bmOptions.inJustDecodeBounds = false;
 
         Bitmap photoReducedSizeBitmap = BitmapFactory.decodeFile(imageFileLocation,bmOptions);
@@ -291,7 +293,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         if(requestCode == ACTIVITY_START_CAMERA_APP && resultCode == Activity.RESULT_OK){
             setReducedImageSize();
-            Toast.makeText(getContext(),imageFileLocation, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getContext(),imageFileLocation, Toast.LENGTH_SHORT).show();
         }
     }
 

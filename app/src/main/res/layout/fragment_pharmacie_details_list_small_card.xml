@@ -28,7 +28,7 @@
             >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.7"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -36,9 +36,10 @@
                 >
                 <ImageView
                     android:layout_width="30dp"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:src="@mipmap/ic_location"
                     android:id="@+id/addressPharmacieIcone"
+                    android:layout_gravity="center"
                     />
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -48,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Adresse"
-                        android:id="@+id/addressPharmacieLibelle"
+                        android:id="@+id/addressPharmacyLibelle"
                         android:textColor="@color/colorTitle"
                         android:textSize="20sp"
                         android:paddingTop="10dp"
@@ -57,7 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Adama DIALLO"
-                        android:id="@+id/addressPharmacie"
+                        android:id="@+id/addressPharmacy"
                         android:textColor="@color/colorTitle"
                         android:textSize="15sp"
                         android:paddingLeft="5dp"/>
@@ -85,9 +86,11 @@
                 >
                 <ImageView
                     android:layout_width="30dp"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:src="@mipmap/ic_call"
                     android:id="@+id/icon_pharmacie"
+                    android:layout_gravity="center"
+
                     />
 
                 <LinearLayout
@@ -98,16 +101,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Telephone"
-                        android:id="@+id/addressTelephoneLibelle"
+                        android:id="@+id/telephonePharmacyLibelle"
                         android:textColor="@color/colorTitle"
                         android:textSize="20sp"
-                        android:paddingTop="10dp"
+                        android:paddingTop="5dp"
                         android:paddingLeft="5dp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="+221 77 421 49 93"
-                        android:id="@+id/addressTelephone"
+                        android:id="@+id/telephonePharmacy"
                         android:textColor="@color/colorTitle"
                         android:textSize="15sp"
                         android:paddingLeft="5dp"/>
