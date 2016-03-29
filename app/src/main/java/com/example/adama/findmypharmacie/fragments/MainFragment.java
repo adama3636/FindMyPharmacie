@@ -72,6 +72,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     Button btnTakePhoto;
 
     private ImageView mPhotoCapturedImageView;
+
     private String imageFileLocation;
 
     private static final int ACTIVITY_START_CAMERA_APP = 0;
@@ -272,8 +273,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setReducedImageSize(){
-        int tagetImageViewWidth = mPhotoCapturedImageView.getWidth();
-        int tagetImageViewHeight = mPhotoCapturedImageView.getHeight();
+        int targetImageViewWidth = (int) getResources().getDimension(R.dimen.image_form_width);
+        int targetImageViewHeight = (int) getResources().getDimension(R.dimen.image_form_height);
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
@@ -281,10 +282,12 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         int cameraImageWidth = bmOptions.outWidth;
         int cameraImageHeight = bmOptions.outHeight;
 
-        bmOptions.inSampleSize = Math.min(cameraImageWidth/tagetImageViewWidth, cameraImageHeight/tagetImageViewHeight);
+    bmOptions.inSampleSize = Math.min(cameraImageWidth/targetImageViewWidth, cameraImageHeight/targetImageViewHeight);
+
+
         bmOptions.inJustDecodeBounds = false;
 
-        Bitmap photoReducedSizeBitmap = BitmapFactory.decodeFile(imageFileLocation,bmOptions);
+        Bitmap photoReducedSizeBitmap = BitmapFactory.decodeFile(imageFileLocation, bmOptions);
         mPhotoCapturedImageView.setImageBitmap(photoReducedSizeBitmap);
     }
 
@@ -293,8 +296,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         if(requestCode == ACTIVITY_START_CAMERA_APP && resultCode == Activity.RESULT_OK){
             setReducedImageSize();
-           // Toast.makeText(getContext(),imageFileLocation, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),imageFileLocation, Toast.LENGTH_SHORT).show();
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public interface OnFragmentInteractionListener {

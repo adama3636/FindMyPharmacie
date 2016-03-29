@@ -13,4 +13,7 @@
     <dimen name="toolbar_elevation">5dp</dimen>
     <dimen name="fab_elevation">10dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
+
+    <dimen name="image_form_width">250dp</dimen>
+    <dimen name="image_form_height">150dp</dimen>
 </resources>

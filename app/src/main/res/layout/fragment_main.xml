@@ -89,8 +89,8 @@
             android:orientation="horizontal"
             android:gravity="center">
             <ImageView
-                android:layout_width="250dp"
-                android:layout_height="150dp"
+                android:layout_width="@dimen/image_form_width"
+                android:layout_height="@dimen/image_form_height"
                 android:padding="15dp"
                 android:gravity="center"
                 android:id="@+id/photoCaptured"/>
