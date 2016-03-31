@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,8 +85,11 @@ public class MapsPharmacie extends Fragment implements OnMapReadyCallback {
             double result = start + (random * (end - start));
 
             String[] pharmacie = pharmacies.get(i).toString().split(",");
-            LatLng location = new LatLng(Double.parseDouble(pharmacie[4]), Double.parseDouble(pharmacie[5])+result);
-            mMap.addMarker(new MarkerOptions().position(location).title(pharmacie[1]).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+
+                LatLng location = new LatLng(Double.parseDouble(pharmacie[4]), Double.parseDouble(pharmacie[5])+result);
+                mMap.addMarker(new MarkerOptions().position(location).title(pharmacie[1]).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+
+
             //Pharmacie lignePharmacie = new Pharmacie(pharmacie[0], pharmacie[1], pharmacie[2],pharmacie[3], pharmacie[4],pharmacie[5],pharmacie[6]);
             //pharmacieList.add(lignePharmacie);
         }

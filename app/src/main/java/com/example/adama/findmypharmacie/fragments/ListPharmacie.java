@@ -100,7 +100,7 @@ public class ListPharmacie extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.main_list_view);
 //        ListM1Adapter listM1Adapter =new ListM1Adapter(getApplicationContext(),R.layout.row_layout);
-        eAdapter = new PharmacieAdapter(pharmacieList);
+        eAdapter = new PharmacieAdapter(pharmacieList, context);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);

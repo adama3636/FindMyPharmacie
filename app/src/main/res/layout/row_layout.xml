@@ -32,8 +32,8 @@
             android:gravity="center"
             >
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/image_row_width"
+                android:layout_height="@dimen/image_row_height"
                 android:src="@drawable/logo_pharmacy"
                 android:id="@+id/icon_pharmacie"
                 />

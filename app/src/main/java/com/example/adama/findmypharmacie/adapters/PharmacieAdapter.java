@@ -17,15 +17,13 @@ import com.example.adama.findmypharmacie.models.Pharmacie;
 
 import java.util.List;
 
-
-/**
- * Created by adama on 16/03/2016.
- */
 public class PharmacieAdapter extends RecyclerView.Adapter<PharmacieAdapter.MyViewHolder>{
     private List<Pharmacie> pharmacieList;
+    private Context context;
 
-    public PharmacieAdapter(List<Pharmacie> pharmacieList){
+    public PharmacieAdapter(List<Pharmacie> pharmacieList, Context context){
         this.pharmacieList = pharmacieList;
+        this.context = context;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -75,8 +73,8 @@ public class PharmacieAdapter extends RecyclerView.Adapter<PharmacieAdapter.MyVi
 
     public void setReducedImageSize(PharmacieAdapter.MyViewHolder holder, String imageFileLocation){
 
-        int tagetImageViewWidth = holder.image.getDrawable().getIntrinsicWidth();
-        int tagetImageViewHeight =holder.image.getDrawable().getIntrinsicHeight();
+        int tagetImageViewWidth = (int) context.getResources().getDimension(R.dimen.image_row_width);
+        int tagetImageViewHeight =(int) context.getResources().getDimension(R.dimen.image_row_height);
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
@@ -84,8 +82,7 @@ public class PharmacieAdapter extends RecyclerView.Adapter<PharmacieAdapter.MyVi
         int cameraImageWidth = bmOptions.outWidth;
         int cameraImageHeight = bmOptions.outHeight;
 
-    int scaleFactor = Math.min(cameraImageWidth/tagetImageViewWidth, cameraImageHeight/tagetImageViewHeight);
-    bmOptions.inSampleSize = scaleFactor;
+    bmOptions.inSampleSize = Math.min(cameraImageWidth/tagetImageViewWidth, cameraImageHeight/tagetImageViewHeight);
 
         bmOptions.inJustDecodeBounds = false;
 
@@ -101,9 +98,8 @@ public class PharmacieAdapter extends RecyclerView.Adapter<PharmacieAdapter.MyVi
         cropW = (cropW < 0)? 0: cropW;
         int cropH = (height - width) / 2;
         cropH = (cropH < 0)? 0: cropH;
-        Bitmap cropImg = Bitmap.createBitmap(bitmap, cropW, cropH, newWidth, newHeight);
 
-        return cropImg;
+        return Bitmap.createBitmap(bitmap, cropW, cropH, newWidth, newHeight);
     }
 
 }

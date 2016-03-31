@@ -16,4 +16,7 @@
 
     <dimen name="image_form_width">250dp</dimen>
     <dimen name="image_form_height">150dp</dimen>
+
+    <dimen name="image_row_width">60dp</dimen>
+    <dimen name="image_row_height">60dp</dimen>
 </resources>

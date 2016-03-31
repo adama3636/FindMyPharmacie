@@ -220,7 +220,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             tvAddress.setText("");
             String strTelephone = tvTelephone.getText().toString();
             tvTelephone.setText("");
-            String strEmei = telephonyManager.getDeviceId();;
+            String strEmei = telephonyManager.getDeviceId();
             String strLatitude = tvLatitude.getText().toString();
             tvLatitude.setText("");
             String strLongitude = tvLongitude.getText().toString();
@@ -231,7 +231,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             Pharmacie pharmacie = new Pharmacie(strName,strTelephone, strAddress, strEmei, strLatitude, strLongitude,strAccuracy, imageFileLocation);
             dbCon.insertPharmacie(pharmacie);
-            Toast.makeText(getContext(),imageFileLocation, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),R.string.success_insert_pharmacie, Toast.LENGTH_LONG).show();
+            mPhotoCapturedImageView.setImageResource(0);
             //updateList();
             // Intent i = new Intent(FormContact.this, MainActivity.class);
 //                Fragment listPharmacie = new ListPharmacie();
