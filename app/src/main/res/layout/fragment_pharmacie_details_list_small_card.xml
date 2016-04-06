@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:text="Adama DIALLO"
                         android:id="@+id/addressPharmacy"
-                        android:textColor="@color/colorTitle"
+                        android:textColor="@color/colorDetails"
                         android:textSize="15sp"
                         android:paddingLeft="5dp"/>
                 </LinearLayout>
@@ -67,13 +67,14 @@
 
             </LinearLayout>
 
-
-
             <View style="@style/Divider"
                 android:background="#dadada"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 />
+
+
 
 
 
@@ -111,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:text="+221 77 421 49 93"
                         android:id="@+id/telephonePharmacy"
-                        android:textColor="@color/colorTitle"
+                        android:textColor="@color/colorDetails"
                         android:textSize="15sp"
                         android:paddingLeft="5dp"/>
                 </LinearLayout>

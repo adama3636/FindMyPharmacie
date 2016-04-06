@@ -45,6 +45,7 @@ public class MapsPharmacie extends Fragment implements OnMapReadyCallback {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setTitle("Carte des pharmacies");
         return inflater.inflate(R.layout.activity_maps_pharmacie, container, false);
     }
 
@@ -69,32 +70,21 @@ public class MapsPharmacie extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        GPSTracker gps = new GPSTracker(getContext());
-        LatLng currentLocation = new LatLng(gps.getLatitude(), gps.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 11));
-
-        double start = 0;
-        double end = 2;
 
 
         DatabaseHelperPharmacie db = new DatabaseHelperPharmacie(getContext());
         ArrayList pharmacies = db.getPharmacie();
         for (int i = 0; i < pharmacies.size(); i++){
-
-            double random = new Random().nextDouble();
-            double result = start + (random * (end - start));
-
             String[] pharmacie = pharmacies.get(i).toString().split(",");
-
-                LatLng location = new LatLng(Double.parseDouble(pharmacie[4]), Double.parseDouble(pharmacie[5])+result);
+                LatLng location = new LatLng(Double.parseDouble(pharmacie[4]), Double.parseDouble(pharmacie[5]));
                 mMap.addMarker(new MarkerOptions().position(location).title(pharmacie[1]).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
-
-
-            //Pharmacie lignePharmacie = new Pharmacie(pharmacie[0], pharmacie[1], pharmacie[2],pharmacie[3], pharmacie[4],pharmacie[5],pharmacie[6]);
-            //pharmacieList.add(lignePharmacie);
         }
         // Add a marker in Sydney and move the camera
 
+        GPSTracker gps = new GPSTracker(getContext());
+        LatLng currentLocation = new LatLng(gps.getLatitude(), gps.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 11));
+        mMap.addMarker(new MarkerOptions().position(currentLocation).title("Localisation actuelle").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_current_location)));
 
     }
 

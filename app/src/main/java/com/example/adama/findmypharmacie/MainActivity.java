@@ -16,7 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.adama.findmypharmacie.fragments.ListNumber;
 import com.example.adama.findmypharmacie.fragments.ListPharmacie;
 import com.example.adama.findmypharmacie.fragments.MainFragment;
 import com.example.adama.findmypharmacie.fragments.MapsPharmacie;
@@ -28,8 +30,9 @@ import com.example.adama.findmypharmacie.fragments.MapsPharmacie;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MainFragment.OnFragmentInteractionListener,
-        ListPharmacie.OnFragmentInteractionListener{
+        ListPharmacie.OnFragmentInteractionListener, ListNumber.OnFragmentInteractionListener{
     DrawerLayout drawer;
+    private long backPressedTime = 0;    // used by onBackPressed()
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +40,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -57,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Add the Very First i.e Squad Fragment to the Container
-        Fragment mainFragment = new MainFragment();
+        Fragment mainFragment = new ListPharmacie();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_fragment,mainFragment,null);
         fragmentTransaction.commit();
@@ -65,10 +60,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        long t = System.currentTimeMillis();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (t - backPressedTime > 2000) {    // 2 secs
+            backPressedTime = t;
+            Toast.makeText(this, "Press back again to logout",
+                    Toast.LENGTH_SHORT).show();
+        }else {
             super.onBackPressed();
         }
     }
@@ -110,11 +111,15 @@ public class MainActivity extends AppCompatActivity
             openFragment(new MainFragment());
         } else if (id == R.id.nav_slideshow) {
             openFragment(new MapsPharmacie());
-        } else if (id == R.id.nav_manage) {
-
+        }  else if (id == R.id.nav_numbers) {
+            openFragment(new ListNumber());
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            String shareBody = "market://details?id=com.example.adama.findmypharmacy";
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Telecharger Find My Pharmacy");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, "Partager via"));
 
         }
 

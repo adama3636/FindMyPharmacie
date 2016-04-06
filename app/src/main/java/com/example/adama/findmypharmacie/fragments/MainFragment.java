@@ -108,6 +108,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        getActivity().setTitle("Formulaire d'ajout");
     }
 
     @Override
@@ -294,12 +295,12 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ACTIVITY_START_CAMERA_APP && resultCode == Activity.RESULT_OK){
             setReducedImageSize();
             Toast.makeText(getContext(),imageFileLocation, Toast.LENGTH_SHORT).show();
         }
-        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     public interface OnFragmentInteractionListener {

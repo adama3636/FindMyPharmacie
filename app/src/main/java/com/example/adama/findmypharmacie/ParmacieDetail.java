@@ -5,12 +5,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adama.findmypharmacie.utils.GPSTracker;
 import com.example.adama.findmypharmacie.utils.HttpConnection;
@@ -28,9 +31,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,10 +44,25 @@ import java.util.List;
 public class ParmacieDetail extends AppCompatActivity implements OnMapReadyCallback {
 
     GoogleMap gMap;
-    private ImageView ivImage;
+    private long backPressedTime = 0;    // used by onBackPressed()
+    public ImageView ivImage;
     private TextView tvName, tvTelephone, tvAdresse;
     private String strName, strTelephone, strAddress, strEmei, strLatitude, strLongitude, strAccuracy;
 
+
+    @Override
+    public void onBackPressed() {
+        long t = System.currentTimeMillis();
+        if (t - backPressedTime > 2000) {    // 2 secs
+            backPressedTime = t;
+            Toast.makeText(this, "Appuyer sur la touche encore pour quitter",
+                    Toast.LENGTH_SHORT).show();
+        }else {
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,51 +95,62 @@ public class ParmacieDetail extends AppCompatActivity implements OnMapReadyCallb
         tvTelephone.setText(strTelephone);
         tvAdresse.setText(strAddress);
 
-        Bitmap photoReducedSizeBitmap = BitmapFactory.decodeFile(getIntent().getStringExtra("Image"));
-        ivImage.setImageBitmap(photoReducedSizeBitmap);
+        (new setPicture(ivImage)).execute(getIntent().getStringExtra("Image"));
 
-        // Gets the MapView from the XML layout and creates it
         MapView mapView = (MapView) findViewById(R.id.map_view);
         mapView.onCreate(savedInstanceState);
 
-        // Gets to GoogleMap from the MapView and does initialization stuff
          mapView.getMapAsync(this);
-//        map.getUiSettings().setMyLocationButtonEnabled(false);
-//        map.setMyLocationEnabled(true);
-
-        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         try {
             MapsInitializer.initialize(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Updates the location and zoom of the MapView
+    }
 
+    private  class setPicture extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
 
+        public setPicture(ImageView bmImage){
+            this.bmImage = bmImage;
+        }
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        @Override
+        protected Bitmap doInBackground(String ... params) {
+            String imgDisplay = params[0];
+            File file = new File(imgDisplay);
+            Bitmap photoReducedSizeBitmap = null;
+            if(file.exists())
+            {
+                photoReducedSizeBitmap = BitmapFactory.decodeFile(file.getPath());
+
+            }
+                return photoReducedSizeBitmap;
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
 
     @Override
     public void onMapReady(GoogleMap map) {
+
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-       // map.setMyLocationEnabled(true);
         map.setTrafficEnabled(true);
         map.setIndoorEnabled(true);
         map.setBuildingsEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(true);
 
+        LatLng location = new LatLng(Double.parseDouble(strLatitude), Double.parseDouble(strLongitude));
+        map.addMarker(new MarkerOptions().position(location).title(strName).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(Double.parseDouble(strLatitude),Double.parseDouble(strLongitude)))      // Sets the center of the map to Mountain View
+                .target(location)      // Sets the center of the map to Mountain View
                 .zoom(14)                   // Sets the zoom
                 .bearing(90)                // Sets the orientation of the camera to east
                 .tilt(30)                   // Sets the tilt of the camera to 30 degrees
@@ -127,21 +158,5 @@ public class ParmacieDetail extends AppCompatActivity implements OnMapReadyCallb
 
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        LatLng location = new LatLng(Double.parseDouble(strLatitude), Double.parseDouble(strLongitude)+0.1);
-        map.addMarker(new MarkerOptions().position(location).title(strName).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
-
-        GPSTracker gps = new GPSTracker(getApplicationContext());
-        LatLng current_location = new LatLng(gps.getLatitude(), gps.getLongitude());
-        map.addMarker(new MarkerOptions().position(current_location).title("Position actuelle").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_current_location)));
-
-
-
     }
-
-
-
-
-
-
-
 }

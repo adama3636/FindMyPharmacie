@@ -1,47 +1,41 @@
 package com.example.adama.findmypharmacie.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.adama.findmypharmacie.R;
+import com.example.adama.findmypharmacie.models.EmergencyNumbers;
 import com.example.adama.findmypharmacie.models.Pharmacie;
 
 import java.io.File;
 import java.util.List;
 
-public class PharmacieAdapter extends RecyclerView.Adapter<PharmacieAdapter.MyViewHolder>{
-    private List<Pharmacie> pharmacieList;
+public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.MyViewHolder>{
+    private List<EmergencyNumbers> numbersList;
     private Context context;
 
-    public PharmacieAdapter(List<Pharmacie> pharmacieList, Context context){
-        this.pharmacieList = pharmacieList;
+    public NumbersAdapter(List<EmergencyNumbers> numbersList, Context context){
+        this.numbersList = numbersList;
         this.context = context;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, telephone, address, emei, latitude, logitude, accracy;
+        private TextView name, telephone, type;
         private ImageView image;
 
         public MyViewHolder(View view) {
             super(view);
-            this.name = (TextView) view.findViewById(R.id.nameList);
-            this.telephone = (TextView) view.findViewById(R.id.telephoneList);
-            this.address = (TextView) view.findViewById(R.id.addressList);
-            this.emei = (TextView) view.findViewById(R.id.emei);
-            this.latitude = (TextView) view.findViewById(R.id.latitude);
-            this.logitude = (TextView) view.findViewById(R.id.logitude);
-            this.accracy = (TextView) view.findViewById(R.id.accuracy);
-            this.image = (ImageView) view.findViewById(R.id.icon_pharmacie);
+            this.name = (TextView) view.findViewById(R.id.nameListNumber);
+            this.telephone = (TextView) view.findViewById(R.id.telephoneListNumber);
+            this.type = (TextView) view.findViewById(R.id.typeListNumber);
+            this.image = (ImageView) view.findViewById(R.id.icon_emergency_numbers);
 
         }
     }
@@ -49,39 +43,36 @@ public class PharmacieAdapter extends RecyclerView.Adapter<PharmacieAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_layout, parent, false);
+                .inflate(R.layout.row_layout_numbers, parent, false);
 
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PharmacieAdapter.MyViewHolder holder, int position) {
-        Pharmacie pharmacie = pharmacieList.get(position);
-        holder.name.setText(pharmacie.getName());
-        holder.address.setText(pharmacie.getAddress());
-        holder.telephone.setText(pharmacie.getTelephone());
+    public void onBindViewHolder(NumbersAdapter.MyViewHolder holder, int position) {
+        EmergencyNumbers emergencyNumbers = numbersList.get(position);
+        holder.name.setText(emergencyNumbers.getName());
+        holder.type.setText(emergencyNumbers.getType());
+        holder.telephone.setText(emergencyNumbers.getTelephone());
        // holder.name.setText(String.valueOf(holder.image.getDrawable().getIntrinsicHeight()));
-        File file = new File( pharmacie.getImage());
-        if(file.exists()){
-            setReducedImageSize(holder, pharmacie.getImage());
+        if( emergencyNumbers.getImage() != 0){
+            setReducedImageSize(holder, emergencyNumbers.getImage());
         }
-
-
     }
 
     @Override
     public int getItemCount() {
-        return pharmacieList.size();
+        return numbersList.size();
     }
 
-    public void setReducedImageSize(PharmacieAdapter.MyViewHolder holder, String imageFileLocation){
+    public void setReducedImageSize(NumbersAdapter.MyViewHolder holder, int imageRessource){
 
         int tagetImageViewWidth = (int) context.getResources().getDimension(R.dimen.image_row_width);
         int tagetImageViewHeight =(int) context.getResources().getDimension(R.dimen.image_row_height);
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(imageFileLocation, bmOptions);
+        BitmapFactory.decodeResource(context.getResources(), imageRessource, bmOptions);
         int cameraImageWidth = bmOptions.outWidth;
         int cameraImageHeight = bmOptions.outHeight;
 
@@ -89,7 +80,7 @@ public class PharmacieAdapter extends RecyclerView.Adapter<PharmacieAdapter.MyVi
 
         bmOptions.inJustDecodeBounds = false;
 
-        Bitmap photoReducedSizeBitmap = BitmapFactory.decodeFile(imageFileLocation, bmOptions);
+        Bitmap photoReducedSizeBitmap = BitmapFactory.decodeResource(context.getResources(), imageRessource, bmOptions);
         holder.image.setImageBitmap(cropToSquare(photoReducedSizeBitmap));
     }
     public static Bitmap cropToSquare(Bitmap bitmap){

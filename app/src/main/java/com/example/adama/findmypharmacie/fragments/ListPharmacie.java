@@ -2,11 +2,14 @@ package com.example.adama.findmypharmacie.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -89,7 +92,7 @@ public class ListPharmacie extends Fragment {
         }
         context = getContext();
         activity = getActivity();
-
+        activity.setTitle("Liste de pharmacies");
     }
 
     @Override
@@ -97,6 +100,23 @@ public class ListPharmacie extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_pharmacie, container, false);
+
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                MainFragment mainFragment= new MainFragment();
+                 getFragmentManager().beginTransaction()
+                        .replace(R.id.content_fragment, mainFragment,null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
 
         recyclerView = (RecyclerView) view.findViewById(R.id.main_list_view);
 //        ListM1Adapter listM1Adapter =new ListM1Adapter(getApplicationContext(),R.layout.row_layout);
@@ -112,6 +132,14 @@ public class ListPharmacie extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(context, recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
+
+                ProgressDialog prog = new ProgressDialog(context);
+                prog.setMessage("Veuillez patienter");
+                prog.setCancelable(false);
+                prog.setIndeterminate(true);
+                prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                prog.show();
+
                 Pharmacie pharmacie = pharmacieList.get(position);
                 Intent i = new Intent(getActivity(), ParmacieDetail.class);
                 i.putExtra("Name", pharmacie.getName());
