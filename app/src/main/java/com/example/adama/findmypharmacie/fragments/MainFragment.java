@@ -179,7 +179,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 latitude = gps.getLatitude();
                 longitude = gps.getLongitude();
                 accuracy = gps.getAccuracy();
-                Toast.makeText(getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude+ "\nAcc: " + accuracy, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Votre localisation est - \nLat: " + latitude + "\nLong: " + longitude+ "\nAcc: " + accuracy, Toast.LENGTH_LONG).show();
                 //btnSubmit.setEnabled(true);
 
             }else{
@@ -234,32 +234,23 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             dbCon.insertPharmacie(pharmacie);
             Toast.makeText(getContext(),R.string.success_insert_pharmacie, Toast.LENGTH_LONG).show();
             mPhotoCapturedImageView.setImageResource(0);
-            //updateList();
-            // Intent i = new Intent(FormContact.this, MainActivity.class);
-//                Fragment listPharmacie = new ListPharmacie();
-//                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                fragmentTransaction.replace(R.id.list_pharmacie, listPharmacie, null);
-//                fragmentTransaction.commit();
 
-            // i.putExtra("Name",strName);
-//                i.putExtra("Surname",strSurname);
-//                i.putExtra("Sexe", sex);
-//                i.putExtra("Login", strLogin);
-//                i.putExtra("Password", strPassword);
-//
-            //startActivity(i);
 
     }
 
     public void takePhoto(View view){
-        Intent callCameraApplicationIntent = new Intent();
-        callCameraApplicationIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+
+
         File photoFile = null;
         try {
             photoFile = createImageFile();
         }catch (IOException e){
             e.printStackTrace();
         }
+
+        Intent callCameraApplicationIntent = new Intent();
+        callCameraApplicationIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+
         callCameraApplicationIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
         startActivityForResult(callCameraApplicationIntent, ACTIVITY_START_CAMERA_APP);
     }
@@ -300,7 +291,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             setReducedImageSize();
             Toast.makeText(getContext(),imageFileLocation, Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public interface OnFragmentInteractionListener {

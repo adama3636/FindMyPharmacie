@@ -34,7 +34,7 @@
             <ImageView
                 android:layout_width="@dimen/image_row_width"
                 android:layout_height="@dimen/image_row_height"
-                android:src="@drawable/logo_pharmacy"
+                android:src="@mipmap/ic_logo"
                 android:id="@+id/icon_pharmacie"
                 />
 

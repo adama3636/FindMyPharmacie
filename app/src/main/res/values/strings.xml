@@ -15,14 +15,7 @@
 
     <string name="success_insert_pharmacie">Pharmacie insere avec succes</string>
 
-    <string-array name="navDrawerItems">
-        <item>Squad</item>
-        <item>Fixtures</item>
-        <item>Table</item>
-        <item>Transfer Zone</item>
-        <item>Gallery</item>
-        <item>Connect</item>
-    </string-array>
+
 
     <style name="TransperantToolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
@@ -33,17 +26,7 @@
     <string name="email">champigny.florent@gmail.com</string>
     <string name="image">image</string>
 
-    <string-array name="navDrawerIcons">
 
-        <item>@drawable/squad</item>
-        <item>@drawable/fixtures</item>
-        <item>@drawable/table</item>
-        <item>@drawable/transfer</item>
-        <item>@drawable/gallery</item>
-        <item>@drawable/connect</item>
-
-
-    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
