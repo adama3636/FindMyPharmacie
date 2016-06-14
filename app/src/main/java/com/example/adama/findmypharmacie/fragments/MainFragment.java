@@ -29,6 +29,7 @@ import com.example.adama.findmypharmacie.models.Pharmacie;
 import com.example.adama.findmypharmacie.models.ValidForm;
 import com.example.adama.findmypharmacie.utils.GPSTracker;
 import com.example.adama.findmypharmacie.R;
+import com.example.adama.findmypharmacie.utils.PharmaciePostData;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +55,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
 
+    final String url="http://5.189.191.135/tp/index.php/api/ajouter";
 
     GPSTracker gps;
     public double latitude;
@@ -232,6 +234,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             Pharmacie pharmacie = new Pharmacie(strName,strTelephone, strAddress, strEmei, strLatitude, strLongitude,strAccuracy, imageFileLocation);
             dbCon.insertPharmacie(pharmacie);
+
+        PharmaciePostData p = new PharmaciePostData(url,pharmacie);
+        p.execute();
+
             Toast.makeText(getContext(),R.string.success_insert_pharmacie, Toast.LENGTH_LONG).show();
             mPhotoCapturedImageView.setImageResource(0);
 

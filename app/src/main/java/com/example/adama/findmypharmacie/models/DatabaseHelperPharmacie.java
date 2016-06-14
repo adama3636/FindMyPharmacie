@@ -58,6 +58,11 @@ public class DatabaseHelperPharmacie extends SQLiteOpenHelper {
         return db.insert(TABLE_NAME, null, pharmacieToInsert);
     }
 
+    public boolean deletePharamacie(Pharmacie pharmacie){
+         return db.delete(TABLE_NAME, "name=? AND telephone=? AND address =?",
+                new String[]{pharmacie.getName(), pharmacie.getTelephone(), pharmacie.getAddress()})> 0;
+    }
+
     public ArrayList<String> getPharmacie() {
         ArrayList<String> output = new ArrayList<>();
 

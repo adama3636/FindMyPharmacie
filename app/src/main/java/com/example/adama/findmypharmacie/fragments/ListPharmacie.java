@@ -106,8 +106,7 @@ public class ListPharmacie extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+
 
                 MainFragment mainFragment= new MainFragment();
                  getFragmentManager().beginTransaction()
@@ -155,35 +154,26 @@ public class ListPharmacie extends Fragment {
             }
 
             @Override
-            public void onLongClick(View view, int position) {
+            public void onLongClick(View view, final int position) {
                 final Pharmacie pharmacie = pharmacieList.get(position);
                 AlertDialog.Builder myAlert = new AlertDialog.Builder(activity);
-                myAlert.setMessage("Voulez vous afficher les informations de l'utilisateur selectionné ?")
+                myAlert.setMessage("Voulez vous supprimer cette pharmacie ?")
                         .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //dialog.dismiss();
                                 // Get values of Componants
+                                DatabaseHelperPharmacie dbCon = new DatabaseHelperPharmacie(getContext());
+                                if(dbCon.deletePharamacie(pharmacie)){
+                                    pharmacieList.remove(position);
+                                    recyclerView.removeViewAt(position);
+                                    eAdapter.notifyItemRemoved(position);
+                                    eAdapter.notifyItemRangeChanged(position, pharmacieList.size());
+                                    Toast.makeText(getContext(),R.string.success_delete_pharmacie, Toast.LENGTH_LONG).show();;
+                                }
 
-//                                String etudiant_name = etudiant.getEtudiant_name();
-//                                String etudiant_prenom = etudiant.getEtudiant_prenom();
-//                                int etudiant_resource = etudiant.getEtudiant_resource();
-//                                String heure = etudiant.getHeure();
-//                                String telephone = etudiant.getTelephone();
-//                                int type_action = etudiant.getType_action();
-//                                int libelle_action = etudiant.getLibelle_action();
-//
-//                                Intent i = new Intent(MainActivity.this, ContactDetails.class);
-//
-//                                i.putExtra("Nom_etudiant",etudiant_name);
-//                                i.putExtra("Prenom_etudiant",etudiant_prenom);
-//                                i.putExtra("Etudiant_resource",etudiant_resource);
-//                                i.putExtra("Heure", heure);
-//                                i.putExtra("Telephone", telephone);
-//                                i.putExtra("Type_action", type_action);
-//                                i.putExtra("Libelle_action", libelle_action);
-//
-//                                startActivity(i);
+                                dbCon.close();
+
                             }
                         })
                         .setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -192,8 +182,7 @@ public class ListPharmacie extends Fragment {
                                 dialog.cancel();
                             }
                         })
-                                //.setTitle(" ")
-                                //.setIcon(R.drawable.kinder)
+
                         .create();
                 myAlert.show();
             }
